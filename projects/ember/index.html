@@ -23,8 +23,8 @@
   <p><strong>Keywords:</strong> <em>React, TypeScript, Vite, Supabase, PostgreSQL, Tailwind CSS, Recharts, Cloudflare Workers, Resend, progressive web app, debt payoff optimization, ADHD-centered design, human-computer interaction.</em></p>
 
   <div class="figure">
-    <div class="figure-placeholder">[ application dashboard: debt-free countdown (244 days), total debt remaining with progress bar, monthly cash flow breakdown, and per-debt-type category tiles with individual payoff timelines. Warm dark interface, Instrument Serif typography. ]</div>
-    <div class="caption">fig. 1 · Ember dashboard (placeholder; drop a real screenshot in /assets and I'll wire it up)</div>
+    <img src="assets/ember-dashboard.png" alt="Ember dashboard. Top: 'Your highest-impact move today: Pay $50 extra to Amazon Card. Saves ~$17 in interest over time.' Stat cards: Total Debt Remaining $30,499 (33% paid off), Debt-Free Countdown May 19, 2076 (49y 12mo), Monthly Cash Flow +$3,683, Check-in Streak 0 days. Per-debt-type tiles for Credit Cards, Student Loans, and Auto Loans." />
+    <div class="caption">fig. 1 &middot; Ember dashboard. Surfaces the single most impactful action of the day above the fold; debt-free countdown and monthly cash flow visible at a glance.</div>
   </div>
 
   <div class="story">
@@ -37,13 +37,18 @@
     <h4>Action</h4>
     <p>I designed and built Ember as a <strong>React/TypeScript/Vite</strong> single-page application with a <strong>Supabase PostgreSQL</strong> backend, magic-link authentication, and a <strong>Cloudflare Workers</strong> middleware layer for integrations. The app implements multiple debt-payoff strategies (avalanche, snowball, custom drag-and-drop ordering), a scenario modeling engine with dual-axis projections showing debt and savings on a unified timeline, and a <strong>promotional / deferred-interest engine</strong> that calculates the true cost of missing a 0% APR deadline, including the silent interest that accumulates and dumps onto the balance at expiration.</p>
     <p>I built the app progressively across several months, shipping features iteratively: household sharing, flexible bill recurrence rules, debt-type categorization with stacked area charts, a running cash-flow register, and PWA support for mobile installation. Throughout, I prioritized the ADHD use case: one-tap daily check-ins, streak tracking, forgiveness-first copy, and visceral payoff celebrations that make progress feel real.</p>
-
-    <h4>Result</h4>
-    <p>Ember is fully deployed on my personal domain, actively used for real debt management, and has validated several of its core design hypotheses in personal use. The deferred-interest engine correctly identified <strong>over $6,000 in potential interest savings</strong> on a single promotional balance, a number no mainstream finance app surfaces clearly. The project represents the most complete full-stack system I have built independently, integrating frontend engineering, database design, authentication, third-party API orchestration, and human-centered UX research into a single cohesive product.</p>
-
-    <h4>Personal contribution</h4>
-    <p>Solo project. All design, engineering, and product decisions made independently.</p>
   </div>
+
+  <div class="figure">
+    <img src="assets/ember-scenarios.png" alt="Ember What-If Scenarios view. Left panel: variables for extra monthly payment ($550), income change, allocation of income change between debt and savings, one-time lump sum, and one-time purchase. Right panel: dual-axis projection chart showing debt (history, baseline, scenario) and savings (baseline, scenario) over a 3-year window. Bottom-right summary: debt-free date August 2028, interest saved $7,116, savings at debt-free $91,936, 32 months sooner." />
+    <div class="caption">fig. 2 &middot; What-If Scenarios. Adjust extra payment, income changes, and lump sums; the engine projects debt and savings on one timeline and quantifies the time / interest saved against the baseline.</div>
+  </div>
+
+  <h3>Result</h3>
+  <p>Ember is fully deployed on my personal domain, actively used for real debt management, and has validated several of its core design hypotheses in personal use. The deferred-interest engine correctly identified <strong>over $6,000 in potential interest savings</strong> on a single promotional balance, a number no mainstream finance app surfaces clearly. The project represents the most complete full-stack system I have built independently, integrating frontend engineering, database design, authentication, third-party API orchestration, and human-centered UX research into a single cohesive product.</p>
+
+  <h3>Personal contribution</h3>
+  <p>Solo project. All design, engineering, and product decisions made independently.</p>
 
   <h3>Bonus failure story</h3>
   <p class="dim" style="margin-top:-6px; margin-bottom: 8px;">An extra "failure → learning → change" arc on top of the main SOAR, included because the lesson is sharp and the math is fun.</p>

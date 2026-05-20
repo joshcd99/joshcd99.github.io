@@ -246,6 +246,18 @@ code, .mono {
   background: rgba(0,0,0,0.2);
 }
 .figure img { display: block; width: 100%; height: auto; }
+
+/* Two figures side by side (used for portrait mobile screenshots + photos). */
+.figure-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 18px 0;
+}
+.figure-row .figure { margin: 0; }
+@media (max-width: 640px) {
+  .figure-row { grid-template-columns: 1fr; }
+}
 .figure .caption {
   font-size: 12px;
   color: var(--muted);

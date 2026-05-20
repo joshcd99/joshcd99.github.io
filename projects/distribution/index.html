@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <base href="/">
-  <title>Great Lakes Radiant &amp; Industrials · auriga.fyi</title>
+  <title>GLR Integrated Shipping Platform · auriga.fyi</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzA1MDgwZiIvPgogIDxnIHN0cm9rZT0iIzZlYTVmZiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC44Ij4KICAgIDxsaW5lIHgxPSIyMiIgeTE9IjUiIHgyPSI4IiB5Mj0iOCIvPgogICAgPGxpbmUgeDE9IjgiIHkxPSI4IiB4Mj0iNyIgeTI9IjE4Ii8+CiAgICA8bGluZSB4MT0iNyIgeTE9IjE4IiB4Mj0iMTYiIHkyPSIyNyIvPgogICAgPGxpbmUgeDE9IjE2IiB5MT0iMjciIHgyPSIyNSIgeTI9IjIxIi8+CiAgICA8bGluZSB4MT0iMjUiIHkxPSIyMSIgeDI9IjIyIiB5Mj0iNSIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjUiIHI9IjIuOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS42IiBmaWxsPSIjZGNlOGZmIi8+CiAgPGNpcmNsZSBjeD0iNyIgY3k9IjE4IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjI3IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIyNSIgY3k9IjIxIiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxOSIgY3k9IjkiIHI9IjEuMiIgZmlsbD0iI2IwY2NmZiIgb3BhY2l0eT0iMC43Ii8+Cjwvc3ZnPg==" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
@@ -15,40 +15,39 @@
 <canvas id="stars-canvas"></canvas>
 
 <main class="page">
-  <h1 class="title">Great Lakes Radiant &amp; Industrials</h1>
-  <h2 class="subtitle">Operations &amp; Technology Lead · Minneapolis, MN · May 2025 – Present · Interdisciplinary · SOAR</h2>
+  <h1 class="title">GLR Integrated Shipping Platform</h1>
+  <h2 class="subtitle">LTL rate shopping &middot; shipment dashboard &middot; NetSuite integration &middot; Interdisciplinary &middot; SOAR</h2>
 
-  <p>I lead Operations &amp; Technology at Great Lakes Radiant &amp; Industrials, an industrial distributor of radiant / hydronic heating systems and related products. My job is to be the connective tissue between five office locations and a stack of operational software that didn't talk to each other, and to build, from scratch, the internal tooling the sales and ops teams need but no vendor will ever ship.</p>
+  <p>An integrated shipping platform for <strong>Great Lakes Radiant &amp; Industrials</strong>, a mid-size industrial radiant heating distributor with five offices and a drop-ship origin in Warren, MI. The platform compares LTL freight rates across three brokers in real time, books shipments, writes freight cost data back to NetSuite, and sends branded tracking emails to customers. Built solo as Operations &amp; Technology Lead.</p>
 
-  <p>I'm cataloging this as <strong>interdisciplinary</strong> rather than pure CS because the work isn't dominated by algorithms or frameworks. It's dominated by domain modeling. To do it well I had to learn what a radiant heating loop actually is, why lead times matter in the trade, how a sales engineer scopes a quote, and what a warehouse picker actually does on the floor. The code is the easy part.</p>
-
-  <p><strong>Keywords:</strong> <em>industrial distribution, systems integration, Cloudflare Workers, NetSuite, SuiteScript, WooCommerce, ShipStation, React, TypeScript, ERP, operations leadership, multi-location, sales engineering, internal tools, adoption.</em></p>
+  <p><strong>Keywords:</strong> <em>REST API integration, TypeScript, Cloudflare Workers, React, Vite, NetSuite SuiteScript, Supabase, logistics technology, LTL freight, rate optimization, middleware architecture, transactional email, PDF generation, data normalization, ERP integration, full-stack development.</em></p>
 
   <div class="figure">
-    <div class="figure-placeholder">[ screenshot of the heating-system layout tool or middleware dashboard; drop one in /assets and I'll wire it up ]</div>
-    <div class="caption">fig. 1 · Great Lakes internal tooling (placeholder)</div>
+    <img src="assets/glr-ltl-quoting.png" alt="Create Shipment flow at the Rates & Confirm step, showing live LTL quotes from Priority1, CHR, and R+L brokers with the cheapest option highlighted as 'BEST RATE'." />
+    <div class="caption">fig. 1 &middot; The three-way rate shopper. Live LTL quotes from Priority1, CHR, and R+L on a single screen, sorted by price.</div>
   </div>
 
   <div class="story">
     <h4>Situation</h4>
-    <p>A growing industrial distributor running on a patchwork of NetSuite, WooCommerce, ShipStation, and ad-hoc spreadsheet workflow across five office locations. Sales engineers were redoing heating-system layouts by hand for every quote. Orders were re-keyed between systems, an obvious source of mistakes, lost time, and frustrated customers. The leadership team needed someone who could both write the software and own the operational change required to actually deploy it.</p>
+    <p>GLR had no programmatic freight infrastructure. Sales reps manually checked rates through individual broker portals, shipments were booked by hand, customers received no tracking notifications, and freight cost data never made it back into NetSuite. With four active shipping origins and three freight brokers (<strong>Priority1, C.H. Robinson, R+L Carriers</strong>), every shipment was a manual, disconnected process.</p>
 
     <h4>Obstacle</h4>
-    <p>No two systems agreed on customer or SKU identity. Sales engineers and warehouse staff (rightly) would not adopt anything that felt like "yet another portal." I was new to the industry; I had to learn the radiant / hydronic domain on the floor, mid-build, while shipping. And every change touched real revenue. This was production from day one, not a sandbox.</p>
+    <p>Each broker had its own API, authentication model, and rate response schema. NetSuite's native tooling offered limited extensibility for real-time freight data. Building a unified system meant designing middleware that could speak to all three brokers simultaneously, normalize wildly different rate structures into a comparable format, handle async operations without blocking the UI, and log everything back to a central data store for reporting. There was no existing internal-tools infrastructure to build on, and I was the sole engineer.</p>
 
     <h4>Action</h4>
-    <ul>
-      <li>Architected and deployed a <strong>Cloudflare Workers</strong> middleware integration connecting <strong>NetSuite, WooCommerce, and ShipStation</strong>, automating order flow across all five locations and eliminating manual re-keying.</li>
-      <li>Designed and built a <strong>web-based heating-system layout tool</strong> in <strong>React / TypeScript</strong>, adopted by the sales team and called out by a partner manufacturer as a competitive differentiator.</li>
-      <li>Drove company-wide technology modernization: ERP scripting (<strong>SuiteScript</strong>), transactional email infrastructure, password management, cloud productivity migration.</li>
-      <li>Worked directly with sales reps, ops staff, and warehouse leads to scope every tool before writing code, a discipline I learned the hard way from a previous failed project (see <a href="projects/greenstep/">GreenStep</a>).</li>
-    </ul>
+    <p>I designed and built a <strong>Cloudflare Worker middleware layer</strong> (TypeScript/Wrangler) as the integration hub. The rate-shopping engine calls Priority1, CHR, and R+L simultaneously, normalizes responses into a unified schema, and returns sorted results in under three seconds. A multi-step <strong>React/Vite</strong> shipment-creation form collects addresses, shipment type, freight details, and accessorial requirements, then hands off to the Worker for live rate fetching and booking confirmation. <strong>Supabase</strong> serves as the sync and logging layer: every shipment, rate fetch, and status event is recorded with broker attribution. On the NetSuite side, I built a <strong>SuiteScript</strong> integration that receives confirmed shipment data via webhook and writes carrier, PRO number, tracking status, and freight cost back to the corresponding Sales Order record. <strong>Resend</strong> handles transactional email: dispatch confirmations and a branded customer-facing tracking page that resolves PRO numbers through the appropriate broker's tracking API. I also designed a GLR-branded BOL document using <strong>ReportLab</strong>, giving the company a consistent document across all three brokers rather than pulling PDFs from three different portals.</p>
+    <p>To validate the business case, I ran a <strong>400-lane rate comparison</strong> across all four shipping origins, analyzing same-carrier matchups between brokers to isolate margin differences from network gaps. The analysis revealed CHR beats Priority1 on 73% of same-carrier lanes by an average of $143 per shipment, with P1's 33.3% flat markup as the primary driver. That data directly informed a vendor negotiation in progress.</p>
 
     <h4>Result</h4>
-    <p>The middleware is in daily production use across five offices. The layout tool is used by the sales team for real customer quotes and has been validated externally by a partner manufacturer. Order-flow data entry that used to be manual is automated. More importantly, the work proved out a thesis I'd been forming since GreenStep: the highest-leverage CS work isn't always the cleanest CS work, and operational empathy (sitting with the people who'll use the tool, scoping with them, learning their domain) is a real competitive moat. This role is also where I started to think seriously about the ethics of operational AI: what to optimize, what not to optimize, and what we owe the people in the loop. See the reflection in the <a href="https://github.com/joshcd99/joshcd99.github.io#readme">README</a>.</p>
+    <p>The platform is deployed and in active use. The three-way rate shopper produces an estimated <strong>$16,900 in annual savings</strong> across three offices compared to the current single-broker setups, with additional upside from the drop-ship origin. Freight cost data flows into NetSuite automatically, eliminating manual entry. Customers receive branded tracking emails for the first time in company history. The work also produced a concrete, data-backed negotiation posture with Priority1 around API fee structure and rate competitiveness.</p>
   </div>
 
-  <p class="dim">(Internal tooling. Code &amp; specifics confidential; happy to walk through architecture &amp; tradeoffs in conversation.)</p>
+  <div class="figure">
+    <img src="assets/glr-shipments-dashboard.png" alt="Shipments dashboard showing 39 total shipments, $2,341.35 total cost, $60.03 average cost, and a table of recent shipments with carrier attribution, PRO numbers, locations, and dispatch status across LTL and parcel modes." />
+    <div class="caption">fig. 2 &middot; Shipments dashboard. Every shipment, rate fetch, and status event logged with broker attribution; carrier costs flow back into NetSuite via the SuiteScript webhook.</div>
+  </div>
+
+  <p class="dim">I'm cataloging this as <strong>interdisciplinary</strong> because the rate-analysis half of the work is squarely in operations and business strategy. The same dataset that drove engineering decisions (which broker to build first) also drove a vendor negotiation: a clean example of technical work producing non-technical outcomes. (Internal tooling. Code and customer-identifying specifics confidential; happy to walk through architecture and tradeoffs in conversation.)</p>
 
   <nav class="page-footer">
     <a href="projects/">← back to projects</a>

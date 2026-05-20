@@ -23,8 +23,8 @@
   <p><strong>Keywords:</strong> <em>capstone, full-stack web development, React, Vite, Material UI, Supabase, PostgreSQL, Row-Level Security, Vercel, agile teamwork, real client engagement, sustainability, Minnesota Pollution Control Agency.</em></p>
 
   <div class="figure">
-    <div class="figure-placeholder">[ dashboard screenshot (customizable widget grid + participating challenge card), or the architecture diagram from <code>docs/ARCHITECTURE.md</code>; drop one in /assets and I'll wire it up ]</div>
-    <div class="caption">fig. 1 · GreenStep Challenge Admin (placeholder)</div>
+    <img src="assets/greenstep-dashboard.png" alt="GreenStep Admin Console dashboard. Top stats: Active Challenges 1, Total Actions Taken 95, Active Users 11, Total Points Earned 608. Challenge summary table listing four challenges with status (Completed, Upcoming, Active), action counts, completions, participants, and points. Below: Actions by Category pie chart." />
+    <div class="caption">fig. 1 &middot; Admin Console dashboard. Top-line metrics + per-challenge status + actions-by-category visualization, scoped via Row-Level Security to the signed-in admin.</div>
   </div>
 
   <div class="story">
@@ -40,6 +40,11 @@
 
     <h4>Result</h4>
     <p>GreenStep ships to MPCA as a working admin tool replacing Kristin's spreadsheets, with role-based access enforced at the database level so the API cannot be bypassed from a browser console. Internally, the codebase is in a substantially more readable state for the next student team: two migration files instead of fourteen, shared form components in one place, and the presets/templates naming inconsistency documented.</p>
+  </div>
+
+  <div class="figure">
+    <img src="assets/greenstep-reports.png" alt="GreenStep Reports view. Filter controls for Challenge and date range with an Export button. 'Actions by Category' bar chart aggregating 95 logged actions. Results table below listing individual user submissions with challenge, action, category, date, and notes (Footprint: 3.2 Earths; No meat today; Unplugged chargers and coffee maker; Took the bus to work; Brought reusable...)." />
+    <div class="caption">fig. 2 &middot; Reports view. Exportable per-challenge results with category aggregation, the artifact Kristin actually needed to replace her spreadsheets.</div>
   </div>
 
   <div class="story failure">
