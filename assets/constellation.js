@@ -44,8 +44,13 @@
       svgEl.style.cssText = [
         'position: fixed',
         'top: 28px',
-        'left: 28px',
-        'width: min(420px, 38vw)',
+        // Stay in the gap to the left of the 760px-wide centered content
+        // column. Formula: target left = (vw - 760)/2 - 300 (constellation
+        // width). On wide screens this resolves to a small positive offset;
+        // on narrower screens it goes negative so the constellation bleeds
+        // off the left edge instead of crashing into the text column.
+        'left: clamp(-180px, calc(50vw - 660px), 20px)',
+        'width: min(280px, 26vw)',
         'height: auto',
         'z-index: 1',
         'opacity: 0',
