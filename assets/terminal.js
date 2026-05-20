@@ -9,8 +9,7 @@
 
   // ─── Routing tables ───────────────────────────────────────────────
   // Internal hrefs are base-relative (no leading slash) so they resolve
-  // correctly against the runtime <base href> tag: works on both
-  // auriga.fyi (Vercel) and joshcd99.github.io (GitHub Pages); both at root.
+  // against the static <base href="/"> tag in each HTML head.
   const PORTFOLIO = {
     about:      { label: 'about',      desc: 'who I am',                       href: 'about/' },
     skills:     { label: 'skills',     desc: 'what I work with',               href: 'skills/' },
@@ -33,10 +32,10 @@
     capstone: 'projects/greenstep/', // capstone IS GreenStep
   };
 
-  // Resolve a base-relative or absolute href against document.baseURI →
+  // Resolve a base-relative or absolute href against document.baseURI to
   // a fully-resolved same-origin pathname suitable for fetch / pushState /
-  // location.href. The <base href> tag set in each HTML head ensures the
-  // base URL is set via the static <base href="/"> tag in each HTML head.
+  // location.href. The static <base href="/"> in each HTML head anchors
+  // resolution at the deploy root.
   function resolveInternal(href) {
     try {
       const u = new URL(href, document.baseURI);
@@ -75,7 +74,7 @@
     root.innerHTML = `
       <div class="dock-bar" data-role="toggle" title="Click to collapse/expand">
         <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="bar-title">auriga.fyi · zsh</span>
+        <span class="bar-title">josh dunlap · zsh</span>
         <span class="dock-hint dim">\` to focus · click to collapse</span>
       </div>
       <div class="dock-body" data-role="body"></div>
