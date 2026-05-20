@@ -229,10 +229,14 @@
       document.body.classList.add('has-dock');
       dock.classList.remove('centered');
       const unpin = pinToBottomDuring();
+      // Reserve a grace window NOW so any mouseleave during the morph
+      // can't schedule a 100ms collapse that beats the initial delay.
+      startGrace(INITIAL_IDLE_MS + 720);
       return awaitDockTransition().then(() => {
         unpin();
-        // First-time docked moment: let the user see the dock briefly
-        // before the snappy auto-collapse takes over.
+        // Extend the grace another INITIAL_IDLE_MS from morph-end, then
+        // schedule the first collapse.
+        startGrace(INITIAL_IDLE_MS);
         scheduleCollapse(INITIAL_IDLE_MS);
       });
     }
@@ -342,7 +346,8 @@
     const INITIAL_IDLE_MS = 1500; // first collapse after mount/morph: give a beat
     let idleTimer = null;
     let mouseOverDock = false;
-    let userClosed = false; // true when user manually collapsed via bar click
+    let userClosed = false;   // true when user manually collapsed via bar click
+    let graceUntil = 0;       // unix-ms timestamp: collapse cannot fire before this
 
     function clearIdle() {
       if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
@@ -351,12 +356,21 @@
       clearIdle();
       if (dock.classList.contains('centered')) return; // hero mode: never
       if (mouseOverDock) return;                       // don't tick while hovered
+      // Even if a caller asks for a snappy 100ms collapse, the dock can't
+      // fire before graceUntil. Mount and the centered->docked morph each
+      // set a grace window so a mouseleave during/right after the morph
+      // doesn't snap the dock shut before the user notices it's there.
+      const requested = delay != null ? delay : IDLE_MS;
+      const effective = Math.max(requested, graceUntil - Date.now());
       idleTimer = setTimeout(() => {
         if (dock.classList.contains('centered')) return;
         if (mouseOverDock) return;
         dock.classList.add('collapsed');
         document.body.classList.add('dock-collapsed');
-      }, delay != null ? delay : IDLE_MS);
+      }, Math.max(0, effective));
+    }
+    function startGrace(ms) {
+      graceUntil = Math.max(graceUntil, Date.now() + ms);
     }
     function expand(opts) {
       if (dock.classList.contains('centered')) return;
@@ -448,7 +462,10 @@
     // Initial mount: longer delay so the user sees the dock briefly
     // before the snappy auto-collapse takes over. Suppressed in the
     // centered intro mode.
-    if (!startCentered) scheduleCollapse(INITIAL_IDLE_MS);
+    if (!startCentered) {
+      startGrace(INITIAL_IDLE_MS);
+      scheduleCollapse(INITIAL_IDLE_MS);
+    }
 
     if (opts.autoFocus) realInput.focus();
 
