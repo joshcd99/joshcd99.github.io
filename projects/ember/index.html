@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/">
+  <title>Ember · auriga.fyi</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzA1MDgwZiIvPgogIDxnIHN0cm9rZT0iIzZlYTVmZiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC44Ij4KICAgIDxsaW5lIHgxPSIyMiIgeTE9IjUiIHgyPSI4IiB5Mj0iOCIvPgogICAgPGxpbmUgeDE9IjgiIHkxPSI4IiB4Mj0iNyIgeTI9IjE4Ii8+CiAgICA8bGluZSB4MT0iNyIgeTE9IjE4IiB4Mj0iMTYiIHkyPSIyNyIvPgogICAgPGxpbmUgeDE9IjE2IiB5MT0iMjciIHgyPSIyNSIgeTI9IjIxIi8+CiAgICA8bGluZSB4MT0iMjUiIHkxPSIyMSIgeDI9IjIyIiB5Mj0iNSIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjUiIHI9IjIuOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS42IiBmaWxsPSIjZGNlOGZmIi8+CiAgPGNpcmNsZSBjeD0iNyIgY3k9IjE4IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjI3IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIyNSIgY3k9IjIxIiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxOSIgY3k9IjkiIHI9IjEuMiIgZmlsbD0iI2IwY2NmZiIgb3BhY2l0eT0iMC43Ii8+Cjwvc3ZnPg==" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/auriga.css" />
+</head>
+<body class="scroll-page">
+
+<canvas id="stars-canvas"></canvas>
+
+<main class="page">
+  <h1 class="title">Ember</h1>
+  <h2 class="subtitle">Personal finance &amp; debt-payoff web application &middot; CS / technical &middot; solo project &middot; SOAR</h2>
+
+  <p>Ember is a personal-finance and debt-payoff web application I designed and built from scratch as a solo developer. It is a full-stack React/TypeScript app with a Supabase backend, deployed at <a href="https://ember.auriga.fyi" target="_blank" rel="noopener">ember.auriga.fyi</a>. The point of view that distinguishes it from mainstream personal-finance tools is <strong>ADHD-centered design</strong>: momentum and visible progress over data density, celebration over shame, the next action over the dashboard.</p>
+
+  <p><strong>Keywords:</strong> <em>React, TypeScript, Vite, Supabase, PostgreSQL, Tailwind CSS, Recharts, Cloudflare Workers, Resend, progressive web app, debt payoff optimization, ADHD-centered design, human-computer interaction.</em></p>
+
+  <div class="figure">
+    <div class="figure-placeholder">[ application dashboard: debt-free countdown (244 days), total debt remaining with progress bar, monthly cash flow breakdown, and per-debt-type category tiles with individual payoff timelines. Warm dark interface, Instrument Serif typography. ]</div>
+    <div class="caption">fig. 1 · Ember dashboard (placeholder; drop a real screenshot in /assets and I'll wire it up)</div>
+  </div>
+
+  <div class="story">
+    <h4>Situation</h4>
+    <p>Managing personal debt is one of the most common sources of financial anxiety for young adults, yet most personal-finance tools are built for neurotypical users with stable incomes and strong executive function. I struggled to find software that matched the way I actually think about money: in terms of momentum, visible progress, and reduced cognitive load. So I decided to build my own.</p>
+
+    <h4>Obstacle</h4>
+    <p>The core challenge was twofold. <strong>Technically</strong>, I needed to build a full-stack web application from scratch as a solo developer while simultaneously finishing my CS degree and working full-time. The harder challenge was <strong>design</strong>: building something genuinely useful for ADHD users meant rethinking standard personal-finance UX from the ground up. Replace shame-based messaging with celebration mechanics, eliminate decision fatigue, and surface the single most impactful action at any given moment rather than overwhelming the user with data.</p>
+
+    <h4>Action</h4>
+    <p>I designed and built Ember as a <strong>React/TypeScript/Vite</strong> single-page application with a <strong>Supabase PostgreSQL</strong> backend, magic-link authentication, and a <strong>Cloudflare Workers</strong> middleware layer for integrations. The app implements multiple debt-payoff strategies (avalanche, snowball, custom drag-and-drop ordering), a scenario modeling engine with dual-axis projections showing debt and savings on a unified timeline, and a <strong>promotional / deferred-interest engine</strong> that calculates the true cost of missing a 0% APR deadline, including the silent interest that accumulates and dumps onto the balance at expiration.</p>
+    <p>I built the app progressively across several months, shipping features iteratively: household sharing, flexible bill recurrence rules, debt-type categorization with stacked area charts, a running cash-flow register, and PWA support for mobile installation. Throughout, I prioritized the ADHD use case: one-tap daily check-ins, streak tracking, forgiveness-first copy, and visceral payoff celebrations that make progress feel real.</p>
+
+    <h4>Result</h4>
+    <p>Ember is fully deployed on my personal domain, actively used for real debt management, and has validated several of its core design hypotheses in personal use. The deferred-interest engine correctly identified <strong>over $6,000 in potential interest savings</strong> on a single promotional balance, a number no mainstream finance app surfaces clearly. The project represents the most complete full-stack system I have built independently, integrating frontend engineering, database design, authentication, third-party API orchestration, and human-centered UX research into a single cohesive product.</p>
+
+    <h4>Personal contribution</h4>
+    <p>Solo project. All design, engineering, and product decisions made independently.</p>
+  </div>
+
+  <h3>Bonus failure story</h3>
+  <p class="dim" style="margin-top:-6px; margin-bottom: 8px;">An extra "failure → learning → change" arc on top of the main SOAR, included because the lesson is sharp and the math is fun.</p>
+  <div class="story failure">
+    <h4>What I was trying to do</h4>
+    <p>Ship the deferred-interest engine: a calculator that surfaces the true cost of missing a 0% APR promotional deadline, so the user can see <em>"if you don't pay this off by Mar 14, this much hidden interest dumps onto your balance."</em></p>
+
+    <h4>What didn't go as well as I hoped</h4>
+    <p>The first version produced a savings estimate of <strong>$3,817</strong> on a debt where the correct figure was <strong>$6,278</strong>. The bug: the projection used <code>interest_rate: 0</code> (the promotional rate) as the basis for projecting interest, instead of the post-promo rate that would actually apply if the deadline slipped. The app cheerfully under-reported the risk by ~40%, which is the exact opposite of what a financial decision-support tool should do.</p>
+
+    <h4>What I learned and what I do differently now</h4>
+    <p>I rebuilt the calculation engine around three explicit cases (active promo, expired promo, no promo), added a user-entered deferred-interest field, and added test cases keyed off the real-world numbers I'd verified by hand. The bigger lesson: when a tool is making a recommendation that money rides on, the calculation can't have an "obvious" path. Every branch needs to be named, every assumption explicit. I now treat any code that touches a number a user will make a decision on the same way I'd treat a database migration: assumptions are documented, edge cases are tests, and the math is checked against ground truth before shipping.</p>
+  </div>
+
+  <p class="dim">Live: <a href="https://ember.auriga.fyi" target="_blank" rel="noopener">ember.auriga.fyi</a></p>
+
+  <nav class="page-footer">
+    <a href="projects/">← back to projects</a>
+    <a href="projects/first-robotics/">next: FIRST Robotics →</a>
+  </nav>
+</main>
+
+<div id="auriga-label">Auriga · The Charioteer</div>
+<script src="assets/auriga.js"></script>
+<script src="assets/terminal.js"></script>
+<script>AurigaTerminal.mountDock();</script>
+</body>
+</html>

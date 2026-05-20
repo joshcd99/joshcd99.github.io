@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/">
+  <title>404 · auriga.fyi</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzA1MDgwZiIvPgogIDxnIHN0cm9rZT0iIzZlYTVmZiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC44Ij4KICAgIDxsaW5lIHgxPSIyMiIgeTE9IjUiIHgyPSI4IiB5Mj0iOCIvPgogICAgPGxpbmUgeDE9IjgiIHkxPSI4IiB4Mj0iNyIgeTI9IjE4Ii8+CiAgICA8bGluZSB4MT0iNyIgeTE9IjE4IiB4Mj0iMTYiIHkyPSIyNyIvPgogICAgPGxpbmUgeDE9IjE2IiB5MT0iMjciIHgyPSIyNSIgeTI9IjIxIi8+CiAgICA8bGluZSB4MT0iMjUiIHkxPSIyMSIgeDI9IjIyIiB5Mj0iNSIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjUiIHI9IjIuOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS42IiBmaWxsPSIjZGNlOGZmIi8+CiAgPGNpcmNsZSBjeD0iNyIgY3k9IjE4IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjI3IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIyNSIgY3k9IjIxIiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxOSIgY3k9IjkiIHI9IjEuMiIgZmlsbD0iI2IwY2NmZiIgb3BhY2l0eT0iMC43Ii8+Cjwvc3ZnPg==" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #05080f;
+      --surface: rgba(8, 14, 28, 0.88);
+      --border: rgba(80, 140, 220, 0.2);
+      --green: #6ee7a0;
+      --green-dim: #3d8a5f;
+      --blue: #7ab3f0;
+      --amber: #f0c070;
+      --red: #f07878;
+      --muted: #3a4a60;
+      --text: #c8ddf0;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
+      color: var(--text);
+    }
+
+    #stars-canvas { position: fixed; inset: 0; z-index: 0; }
+
+    #scene {
+      position: fixed; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      pointer-events: none;
+    }
+
+    .terminal {
+      pointer-events: all;
+      width: 100%; max-width: 520px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 0 0 1px rgba(100,160,255,0.06),
+        0 24px 64px rgba(0,0,0,0.75),
+        0 0 80px rgba(60,120,220,0.07);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: terminalAppear 0.7s cubic-bezier(0.2,0.8,0.3,1) 0.4s forwards;
+    }
+    @keyframes terminalAppear { to { opacity:1; transform:translateY(0); } }
+
+    .terminal-bar {
+      display: flex; align-items: center; gap: 7px;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.025);
+      border-radius: 10px 10px 0 0;
+    }
+    .dot { width:11px; height:11px; border-radius:50%; }
+    .dot.r { background:#f4645f; }
+    .dot.y { background:#f5a623; }
+    .dot.g { background:#27c93f; }
+    .bar-title { font-size:12px; color:var(--muted); margin:0 auto; padding-right:28px; letter-spacing:0.05em; }
+
+    .terminal-body {
+      padding: 22px 24px 26px;
+      font-size: 14px; line-height: 1.75; letter-spacing: 0.02em;
+    }
+
+    .line   { display:block; white-space:pre; }
+    .prompt { color:var(--green); }
+    .cmd    { color:var(--text); }
+    .dim    { color:var(--muted); }
+    .err    { color:var(--red); }
+    .home-link {
+      color: var(--blue);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(122,179,240,0.3);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .home-link:hover {
+      color: #b8d8ff;
+      border-bottom-color: rgba(180,215,255,0.6);
+    }
+
+    .cursor {
+      display:inline-block; width:8px; height:14px;
+      background:var(--green); vertical-align:middle; margin-left:1px;
+      animation:blink 1.1s step-end infinite;
+    }
+    @keyframes blink  { 0%,100%{opacity:1;} 50%{opacity:0;} }
+    @keyframes fadeIn { to{opacity:1;} }
+
+    #auriga-label {
+      position:fixed; bottom:28px; right:32px;
+      font-family:'Syne',sans-serif; font-weight:700;
+      font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+      color:rgba(140,190,255,0.22); z-index:3;
+      opacity:0; animation:fadeIn 1s ease 2.5s forwards;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<div id="scene">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="bar-title">auriga.fyi · zsh</span>
+    </div>
+    <div class="terminal-body" id="terminal-body"></div>
+  </div>
+</div>
+
+<div id="auriga-label">Auriga · The Charioteer</div>
+
+<script>
+  /* ── STARFIELD ── */
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  function initStars(n = 260) {
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.2,
+      a: Math.random() * 0.7 + 0.2,
+      da: (Math.random() - 0.5) * 0.003,
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const s of stars) {
+      s.a += s.da;
+      if (s.a > 0.9 || s.a < 0.1) s.da *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200,220,255,${s.a})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(drawStars);
+  }
+  resize(); initStars();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  drawStars();
+
+  /* ── TERMINAL ── */
+  const body = document.getElementById('terminal-body');
+  const path = window.location.pathname;
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  function appendLine(html = '') {
+    const span = document.createElement('span');
+    span.className = 'line';
+    span.innerHTML = html;
+    body.appendChild(span);
+    return span;
+  }
+
+  async function typeText(el, text, speed = 50) {
+    for (const ch of text) { el.textContent += ch; await sleep(speed + Math.random() * 25); }
+  }
+
+  async function run() {
+    await sleep(500);
+
+    // Type the bad command
+    {
+      const line = appendLine('<span class="prompt">$ </span>');
+      const cmd = document.createElement('span'); cmd.className = 'cmd';
+      const cur = document.createElement('span'); cur.className = 'cursor';
+      line.appendChild(cmd); line.appendChild(cur);
+      await typeText(cmd, `cd ~${path}`, 55);
+      await sleep(200); cur.remove();
+    }
+
+    await sleep(150);
+    appendLine(`<span class="err">zsh: no such file or directory: ~${path}</span>`);
+    await sleep(120);
+    appendLine(`<span class="err">404</span><span class="dim">: that path doesn't exist.</span>`);
+    appendLine();
+    await sleep(200);
+
+    // Final prompt with home link hint
+    const hint = appendLine('');
+    hint.style.opacity = '0';
+    hint.style.transition = 'opacity 0.4s ease';
+    hint.innerHTML = `<span class="dim">→ head back to </span><a class="home-link" href="./">auriga.fyi</a>`;
+    await sleep(50);
+    hint.style.opacity = '1';
+
+    await sleep(300);
+    const last = appendLine('<span class="prompt">$ </span>');
+    const cur2 = document.createElement('span'); cur2.className = 'cursor';
+    last.appendChild(cur2);
+  }
+
+  run();
+</script>
+</body>
+</html>

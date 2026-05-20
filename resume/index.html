@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/">
+  <title>resume · auriga.fyi</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzA1MDgwZiIvPgogIDxnIHN0cm9rZT0iIzZlYTVmZiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC44Ij4KICAgIDxsaW5lIHgxPSIyMiIgeTE9IjUiIHgyPSI4IiB5Mj0iOCIvPgogICAgPGxpbmUgeDE9IjgiIHkxPSI4IiB4Mj0iNyIgeTI9IjE4Ii8+CiAgICA8bGluZSB4MT0iNyIgeTE9IjE4IiB4Mj0iMTYiIHkyPSIyNyIvPgogICAgPGxpbmUgeDE9IjE2IiB5MT0iMjciIHgyPSIyNSIgeTI9IjIxIi8+CiAgICA8bGluZSB4MT0iMjUiIHkxPSIyMSIgeDI9IjIyIiB5Mj0iNSIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjUiIHI9IjIuOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS42IiBmaWxsPSIjZGNlOGZmIi8+CiAgPGNpcmNsZSBjeD0iNyIgY3k9IjE4IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjI3IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIyNSIgY3k9IjIxIiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxOSIgY3k9IjkiIHI9IjEuMiIgZmlsbD0iI2IwY2NmZiIgb3BhY2l0eT0iMC43Ii8+Cjwvc3ZnPg==" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/auriga.css" />
+  <style>
+    .resume-actions {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin: 16px 0 20px;
+    }
+    .resume-actions a {
+      padding: 8px 14px;
+      border: 1px solid rgba(122,179,240,0.3);
+      border-radius: 4px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .resume-actions a:hover {
+      color: var(--blue-bright);
+      border-color: rgba(180,215,255,0.6);
+      background: rgba(122,179,240,0.05);
+    }
+    .resume-embed {
+      width: 100%;
+      min-height: 720px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: rgba(0,0,0,0.3);
+    }
+    .resume-body {
+      margin-top: 24px;
+      padding: 24px 28px;
+      background: rgba(122,179,240,0.03);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .resume-body h3 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--green);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 20px 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px dashed rgba(80,140,220,0.2);
+    }
+    .resume-body h3:first-child { margin-top: 0; }
+    .resume-body .entry-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      flex-wrap: wrap; gap: 6px;
+      margin-top: 10px;
+    }
+    .resume-body .entry-head .role { color: var(--blue); font-weight: 700; }
+    .resume-body .entry-head .org { color: var(--text-dim); }
+    .resume-body .entry-head .when { color: var(--muted); font-size: 12px; }
+    .resume-body ul { margin: 6px 0 12px; padding-left: 18px; }
+    .resume-body li { font-size: 13.5px; line-height: 1.65; margin-bottom: 3px; }
+  </style>
+</head>
+<body class="scroll-page">
+
+<canvas id="stars-canvas"></canvas>
+
+<main class="page">
+  <h1 class="title">Resume</h1>
+      <h2 class="subtitle">Josh Dunlap · B.S. CS, University of St. Thomas · Expected May 2026</h2>
+
+      <div class="resume-actions">
+        <a href="resume/josh-dunlap-resume.pdf" target="_blank" rel="noopener">Download PDF ↓</a>
+        <a href="mailto:josh.dunlap@stthomas.edu">Email me</a>
+        <a href="https://linkedin.com/in/joshdunlap2" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/joshcd99" target="_blank" rel="noopener">GitHub</a>
+      </div>
+
+      <object class="resume-embed" data="resume/josh-dunlap-resume.pdf" type="application/pdf">
+        <p class="dim" style="padding: 20px;">PDF preview not available. <a href="resume/josh-dunlap-resume.pdf">Download the PDF</a> instead.</p>
+      </object>
+
+
+      <nav class="page-footer">
+        <a href="./">← home</a>
+        <a href="about/">about</a>
+        <a href="skills/">skills</a>
+        <a href="projects/">projects</a>
+      </nav>
+    </main>
+
+<div id="auriga-label">Auriga · The Charioteer</div>
+<script src="assets/auriga.js"></script>
+<script src="assets/terminal.js"></script>
+<script>AurigaTerminal.mountDock();</script>
+</body>
+</html>

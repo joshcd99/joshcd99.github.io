@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/">
+  <title>Great Lakes Radiant &amp; Industrials · auriga.fyi</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzA1MDgwZiIvPgogIDxnIHN0cm9rZT0iIzZlYTVmZiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC44Ij4KICAgIDxsaW5lIHgxPSIyMiIgeTE9IjUiIHgyPSI4IiB5Mj0iOCIvPgogICAgPGxpbmUgeDE9IjgiIHkxPSI4IiB4Mj0iNyIgeTI9IjE4Ii8+CiAgICA8bGluZSB4MT0iNyIgeTE9IjE4IiB4Mj0iMTYiIHkyPSIyNyIvPgogICAgPGxpbmUgeDE9IjE2IiB5MT0iMjciIHgyPSIyNSIgeTI9IjIxIi8+CiAgICA8bGluZSB4MT0iMjUiIHkxPSIyMSIgeDI9IjIyIiB5Mj0iNSIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjUiIHI9IjIuOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS42IiBmaWxsPSIjZGNlOGZmIi8+CiAgPGNpcmNsZSBjeD0iNyIgY3k9IjE4IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjI3IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIyNSIgY3k9IjIxIiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxOSIgY3k9IjkiIHI9IjEuMiIgZmlsbD0iI2IwY2NmZiIgb3BhY2l0eT0iMC43Ii8+Cjwvc3ZnPg==" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/auriga.css" />
+</head>
+<body class="scroll-page">
+
+<canvas id="stars-canvas"></canvas>
+
+<main class="page">
+  <h1 class="title">Great Lakes Radiant &amp; Industrials</h1>
+  <h2 class="subtitle">Operations &amp; Technology Lead · Minneapolis, MN · May 2025 – Present · Interdisciplinary · SOAR</h2>
+
+  <p>I lead Operations &amp; Technology at Great Lakes Radiant &amp; Industrials, an industrial distributor of radiant / hydronic heating systems and related products. My job is to be the connective tissue between five office locations and a stack of operational software that didn't talk to each other, and to build, from scratch, the internal tooling the sales and ops teams need but no vendor will ever ship.</p>
+
+  <p>I'm cataloging this as <strong>interdisciplinary</strong> rather than pure CS because the work isn't dominated by algorithms or frameworks. It's dominated by domain modeling. To do it well I had to learn what a radiant heating loop actually is, why lead times matter in the trade, how a sales engineer scopes a quote, and what a warehouse picker actually does on the floor. The code is the easy part.</p>
+
+  <p><strong>Keywords:</strong> <em>industrial distribution, systems integration, Cloudflare Workers, NetSuite, SuiteScript, WooCommerce, ShipStation, React, TypeScript, ERP, operations leadership, multi-location, sales engineering, internal tools, adoption.</em></p>
+
+  <div class="figure">
+    <div class="figure-placeholder">[ screenshot of the heating-system layout tool or middleware dashboard; drop one in /assets and I'll wire it up ]</div>
+    <div class="caption">fig. 1 · Great Lakes internal tooling (placeholder)</div>
+  </div>
+
+  <div class="story">
+    <h4>Situation</h4>
+    <p>A growing industrial distributor running on a patchwork of NetSuite, WooCommerce, ShipStation, and ad-hoc spreadsheet workflow across five office locations. Sales engineers were redoing heating-system layouts by hand for every quote. Orders were re-keyed between systems, an obvious source of mistakes, lost time, and frustrated customers. The leadership team needed someone who could both write the software and own the operational change required to actually deploy it.</p>
+
+    <h4>Obstacle</h4>
+    <p>No two systems agreed on customer or SKU identity. Sales engineers and warehouse staff (rightly) would not adopt anything that felt like "yet another portal." I was new to the industry; I had to learn the radiant / hydronic domain on the floor, mid-build, while shipping. And every change touched real revenue. This was production from day one, not a sandbox.</p>
+
+    <h4>Action</h4>
+    <ul>
+      <li>Architected and deployed a <strong>Cloudflare Workers</strong> middleware integration connecting <strong>NetSuite, WooCommerce, and ShipStation</strong>, automating order flow across all five locations and eliminating manual re-keying.</li>
+      <li>Designed and built a <strong>web-based heating-system layout tool</strong> in <strong>React / TypeScript</strong>, adopted by the sales team and called out by a partner manufacturer as a competitive differentiator.</li>
+      <li>Drove company-wide technology modernization: ERP scripting (<strong>SuiteScript</strong>), transactional email infrastructure, password management, cloud productivity migration.</li>
+      <li>Worked directly with sales reps, ops staff, and warehouse leads to scope every tool before writing code, a discipline I learned the hard way from a previous failed project (see <a href="projects/greenstep/">GreenStep</a>).</li>
+    </ul>
+
+    <h4>Result</h4>
+    <p>The middleware is in daily production use across five offices. The layout tool is used by the sales team for real customer quotes and has been validated externally by a partner manufacturer. Order-flow data entry that used to be manual is automated. More importantly, the work proved out a thesis I'd been forming since GreenStep: the highest-leverage CS work isn't always the cleanest CS work, and operational empathy (sitting with the people who'll use the tool, scoping with them, learning their domain) is a real competitive moat. This role is also where I started to think seriously about the ethics of operational AI: what to optimize, what not to optimize, and what we owe the people in the loop. See the reflection in the <a href="https://github.com/joshcd99/joshcd99.github.io#readme">README</a>.</p>
+  </div>
+
+  <p class="dim">(Internal tooling. Code &amp; specifics confidential; happy to walk through architecture &amp; tradeoffs in conversation.)</p>
+
+  <nav class="page-footer">
+    <a href="projects/">← back to projects</a>
+    <a href="projects/punch-through/">next: Punch Through →</a>
+  </nav>
+</main>
+
+<div id="auriga-label">Auriga · The Charioteer</div>
+<script src="assets/auriga.js"></script>
+<script src="assets/terminal.js"></script>
+<script>AurigaTerminal.mountDock();</script>
+</body>
+</html>

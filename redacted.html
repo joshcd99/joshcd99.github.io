@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/">
+  <title>[redacted]</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%;
+      background: #05080f;
+      overflow: hidden;
+    }
+
+    #stars-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /*
+      Size the iframe to fit 16:9 video exactly, then scale up ~20%
+      to crop YouTube's top bar and bottom controls off-screen.
+      The starfield shows through around the video.
+    */
+    .video-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-wrap iframe {
+      /* Fill viewport maintaining 16:9, then scale to crop controls */
+      width: 100vw;
+      height: 56.25vw; /* 16:9 */
+      min-width: 177.78vh; /* inverse: fill vertically if needed */
+      min-height: 100vh;
+      border: none;
+      pointer-events: none;
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<div class="video-wrap">
+  <iframe
+    id="yt"
+    src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&loop=1&playlist=dQw4w9WgXcQ&start=0&disablekb=1"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<script>
+  /* ── STARFIELD (matches 404 / index) ── */
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  function initStars(n = 260) {
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.2,
+      a: Math.random() * 0.7 + 0.2,
+      da: (Math.random() - 0.5) * 0.003,
+    }));
+  }
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const s of stars) {
+      s.a += s.da;
+      if (s.a > 0.9 || s.a < 0.1) s.da *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200,220,255,${s.a})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(drawStars);
+  }
+  resize(); initStars();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  drawStars();
+
+  /* ── CHAOS MODE ── */
+  let chaosActive = true;
+
+  // Trap back navigation
+  history.pushState(null, '', location.href);
+  window.addEventListener('popstate', () => {
+    history.pushState(null, '', location.href);
+  });
+
+  // Prevent right-click
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Request fullscreen on first interaction
+  function goFullscreen() {
+    if (!chaosActive) return;
+    const el = document.documentElement;
+    (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el).catch(() => {});
+  }
+  // Every click re-requests fullscreen (user gesture required by browsers)
+  document.addEventListener('click', goFullscreen);
+
+  // Block leaving the page
+  window.addEventListener('beforeunload', e => {
+    if (!chaosActive) return;
+    e.preventDefault();
+    e.returnValue = '';
+  });
+
+  // Cycling page title
+  const titles = [
+    'NEVER GONNA GIVE YOU UP',
+    'NEVER GONNA LET YOU DOWN',
+    'NEVER GONNA RUN AROUND',
+    'AND DESERT YOU',
+  ];
+  let titleIdx = 0;
+  const titleInterval = setInterval(() => {
+    if (!chaosActive) return;
+    document.title = titles[titleIdx];
+    titleIdx = (titleIdx + 1) % titles.length;
+  }, 1500);
+
+  // Block keyboard shortcuts that could pause/escape
+  document.addEventListener('keydown', e => {
+    // Escape hatch: Cmd/Ctrl+Shift+9
+    if (e.key === '9' && e.shiftKey && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      chaosActive = false;
+      clearInterval(titleInterval);
+      document.title = 'auriga.fyi';
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+      // Show escape indicator
+      const indicator = document.createElement('div');
+      indicator.textContent = '✓ escaped';
+      Object.assign(indicator.style, {
+        position: 'fixed', bottom: '16px', left: '16px', zIndex: '10',
+        fontFamily: "'Share Tech Mono', monospace", fontSize: '11px',
+        color: 'rgba(110, 231, 160, 0.5)', letterSpacing: '0.05em',
+        opacity: '0', transition: 'opacity 0.4s ease',
+      });
+      document.body.appendChild(indicator);
+      requestAnimationFrame(() => { indicator.style.opacity = '1'; });
+      return;
+    }
+
+    if (!chaosActive) return;
+
+    // Block spacebar, k (YT pause), escape, and media keys
+    const blocked = ['Space', 'KeyK', 'Escape', 'MediaPlayPause', 'MediaStop'];
+    if (blocked.includes(e.code) || e.key === ' ') {
+      e.preventDefault();
+    }
+  });
+</script>
+</body>
+</html>

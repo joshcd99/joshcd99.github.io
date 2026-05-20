@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/">
+  <title>GreenStep Challenge Admin · auriga.fyi</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzA1MDgwZiIvPgogIDxnIHN0cm9rZT0iIzZlYTVmZiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC44Ij4KICAgIDxsaW5lIHgxPSIyMiIgeTE9IjUiIHgyPSI4IiB5Mj0iOCIvPgogICAgPGxpbmUgeDE9IjgiIHkxPSI4IiB4Mj0iNyIgeTI9IjE4Ii8+CiAgICA8bGluZSB4MT0iNyIgeTE9IjE4IiB4Mj0iMTYiIHkyPSIyNyIvPgogICAgPGxpbmUgeDE9IjE2IiB5MT0iMjciIHgyPSIyNSIgeTI9IjIxIi8+CiAgICA8bGluZSB4MT0iMjUiIHkxPSIyMSIgeDI9IjIyIiB5Mj0iNSIvPgogIDwvZz4KICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjUiIHI9IjIuOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS42IiBmaWxsPSIjZGNlOGZmIi8+CiAgPGNpcmNsZSBjeD0iNyIgY3k9IjE4IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjI3IiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIyNSIgY3k9IjIxIiByPSIxLjYiIGZpbGw9IiNkY2U4ZmYiLz4KICA8Y2lyY2xlIGN4PSIxOSIgY3k9IjkiIHI9IjEuMiIgZmlsbD0iI2IwY2NmZiIgb3BhY2l0eT0iMC43Ii8+Cjwvc3ZnPg==" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/auriga.css" />
+</head>
+<body class="scroll-page">
+
+<canvas id="stars-canvas"></canvas>
+
+<main class="page">
+  <h1 class="title">GreenStep Challenge Admin</h1>
+  <h2 class="subtitle">CISC 480 senior capstone &middot; CS / technical &middot; team project &middot; SOAR + failure story</h2>
+
+  <p>A full-stack web application that replaces the spreadsheets the <strong>Minnesota Pollution Control Agency</strong> had been using to administer its &ldquo;GreenStep&rdquo; sustainability challenges. Built with a four-person team for a real client, in production at <a href="https://greenstep.auriga.fyi" target="_blank" rel="noopener">greenstep.auriga.fyi</a>.</p>
+
+  <p><strong>Keywords:</strong> <em>capstone, full-stack web development, React, Vite, Material UI, Supabase, PostgreSQL, Row-Level Security, Vercel, agile teamwork, real client engagement, sustainability, Minnesota Pollution Control Agency.</em></p>
+
+  <div class="figure">
+    <div class="figure-placeholder">[ dashboard screenshot (customizable widget grid + participating challenge card), or the architecture diagram from <code>docs/ARCHITECTURE.md</code>; drop one in /assets and I'll wire it up ]</div>
+    <div class="caption">fig. 1 · GreenStep Challenge Admin (placeholder)</div>
+  </div>
+
+  <div class="story">
+    <h4>Situation</h4>
+    <p>Our four-person team partnered with Kristin Mroz-Risse at the <strong>Minnesota Pollution Control Agency (MPCA)</strong> to replace the spreadsheets she had been using to run her agency's &ldquo;GreenStep&rdquo; sustainability challenges. Staff signed up to log everyday actions (biking to work, eliminating single-use plastics, shorter showers), and Kristin needed a tool to administer cohorts, define challenges and templates, track participation, and generate reports. The result is GreenStep Challenge Admin, a full-stack web application built in <strong>React + Vite + Material UI</strong>, backed by <strong>Supabase (PostgreSQL with Row-Level Security)</strong> and deployed on <strong>Vercel</strong>.</p>
+
+    <h4>Obstacle</h4>
+    <p>Building for a real client meant the requirements kept moving: Kristin would describe a workflow, we'd ship a slice, she'd see it and reshape the request. Internally, four developers working in parallel branches kept colliding. Auth changes shipped on one branch silently broke dev login on another. Schema refactors landed before the API code that needed them. The project's SQL migration files quietly drifted from what was actually deployed to the Supabase project.</p>
+
+    <h4>Action <span class="dim" style="font-size: 11px; text-transform: none; letter-spacing: 0;">(my personal contribution)</span></h4>
+    <p>I owned the <strong>authentication stack and the schema</strong>, and I served as the <strong>de facto technical lead for production deploys</strong>. I migrated the team off magic-link auth (which corporate email scanners were pre-fetching and consuming) to an <strong>8-digit OTP code flow</strong>, then layered <strong>Row-Level Security</strong> policies on top with a role hierarchy (SuperAdmin &rarr; Admin &rarr; GeneralUser) enforced at the database layer rather than the API. I refactored the front-end to lift duplicated <code>ActionFormDialog</code> and <code>CategoryFormDialog</code> components into a shared <code>components/shared/forms/</code> module so the Challenge and Template forms stopped reaching across feature folders. For the project handoff to next semester's team, I squashed 14 partially-redundant migration files (including a four-migration RLS-flap loop) into two readable baseline files, reconciled them with the actually-deployed schema, and cleaned up the live <code>supabase_migrations</code> history table to match.</p>
+    <p class="dim">PRs I authored: #49 (4-color theme + auth race fix) &middot; #70 (shared form components) &middot; #82 (schema-mismatch fix for the Create Challenge bug) &middot; #85 (migration squash for handoff).</p>
+
+    <h4>Result</h4>
+    <p>GreenStep ships to MPCA as a working admin tool replacing Kristin's spreadsheets, with role-based access enforced at the database level so the API cannot be bypassed from a browser console. Internally, the codebase is in a substantially more readable state for the next student team: two migration files instead of fourteen, shared form components in one place, and the presets/templates naming inconsistency documented.</p>
+  </div>
+
+  <div class="story failure">
+    <h4>1. What I was trying to do (context)</h4>
+    <p>Fix a &ldquo;Create Challenge&rdquo; bug a teammate hit on the deployed app. The browser console reported <code>Could not find the 'bgColorBody' column of 'challenges'</code>: a clear schema-mismatch error. I read the repository's <code>001_initial_schema.sql</code>, saw the normalized layout it described (a separate <code>themes</code> table with a <code>themeId</code> foreign key), and shipped a fix that rewrote the form to send <code>themeId</code> and <code>categoryId</code>.</p>
+
+    <h4>2. What didn't go as well as I hoped</h4>
+    <p>The fix immediately failed in production with <code>Could not find the table 'public.themes'</code>. The migration files in the repo had been silently rewritten after being applied, and described a schema that was never actually deployed. <strong>I had built the wrong fix on top of fictional ground truth.</strong></p>
+
+    <h4>3. What I learned and what I do differently now</h4>
+    <p>I now treat repo migration files as a <em>claim</em> about the schema, not the schema itself, especially in a multi-developer project where anyone can edit them. The right first step on any schema bug is to query the live database directly (<code>supabase migration fetch</code>, or <code>pg_dump --schema-only</code>) and diff that against the repo. I reverted the broken PR, wrote a single one-column migration that matched reality, and later went back to clean up the drifted migration files so the next team would never be misled the same way I was.</p>
+  </div>
+
+  <p class="dim">Live: <a href="https://greenstep.auriga.fyi" target="_blank" rel="noopener">greenstep.auriga.fyi</a></p>
+
+  <nav class="page-footer">
+    <a href="projects/">← back to projects</a>
+    <a href="projects/distribution/">next: Great Lakes →</a>
+  </nav>
+</main>
+
+<div id="auriga-label">Auriga · The Charioteer</div>
+<script src="assets/auriga.js"></script>
+<script src="assets/terminal.js"></script>
+<script>AurigaTerminal.mountDock();</script>
+</body>
+</html>
