@@ -15,6 +15,7 @@
   --text: #c8ddf0;
   --text-dim: #8fa5be;
   --dock-height: 280px;
+  --dock-collapsed-height: 44px;
 }
 
 html, body {
@@ -402,16 +403,27 @@ code, .mono {
     0 0 80px rgba(60, 120, 220, 0.07);
 }
 
+/* Collapsed = only the prompt row visible, pinned to the bottom of the viewport.
+   Hides the title bar and the history body, leaving the blinking "$ _" cursor
+   as the affordance: hover/click/type expands. */
 .terminal-dock.collapsed:not(.centered) {
-  height: 36px;
+  top: calc(100vh - var(--dock-collapsed-height, 44px));
+  height: var(--dock-collapsed-height, 44px);
   overflow: hidden;
+}
+.terminal-dock.collapsed:not(.centered) .dock-bar,
+.terminal-dock.collapsed:not(.centered) .dock-body {
+  display: none;
+}
+.terminal-dock.collapsed:not(.centered) .dock-input-row {
+  border-top: none;
 }
 
 body.has-dock {
   padding-bottom: calc(var(--dock-height) + 16px);
 }
 body.has-dock.dock-collapsed {
-  padding-bottom: 52px;
+  padding-bottom: calc(var(--dock-collapsed-height, 44px) + 16px);
 }
 
 .terminal-dock .dock-bar {
@@ -501,9 +513,7 @@ body.has-dock.dock-collapsed {
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
 @media (max-width: 640px) {
-  :root { --dock-height: 220px; }
-  .terminal-dock.collapsed:not(.centered) { height: 32px; }
-  body.has-dock.dock-collapsed { padding-bottom: 48px; }
+  :root { --dock-height: 220px; --dock-collapsed-height: 40px; }
   .terminal-dock .dock-bar .dock-hint { display: none; }
   .terminal-dock .dock-body { padding: 10px 12px; font-size: 13px; }
   .terminal-dock .dock-input-row { padding: 8px 12px 12px; }

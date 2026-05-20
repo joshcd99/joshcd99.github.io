@@ -140,8 +140,10 @@
     const state = loadState();
     const startCentered = !!opts.centered;
     const isIntroRun = !!opts.intro && startCentered;
-    const startCollapsed = startCentered ? false :
-      (opts.collapsed != null ? opts.collapsed : !!state.collapsed);
+    // Fresh page mounts always come up expanded; the idle timer takes
+    // over and auto-collapses after a few seconds of no interaction.
+    // Caller can still force an initial collapsed state via opts.collapsed.
+    const startCollapsed = startCentered ? false : !!opts.collapsed;
 
     const dock = buildDock();
     if (startCentered) dock.classList.add('centered');
@@ -150,7 +152,10 @@
     // In docked mode we add body padding so content can scroll past.
     // In centered mode the terminal floats over content; no padding needed.
     if (!startCentered) document.body.classList.add('has-dock');
-    if (startCollapsed) dock.classList.add('collapsed');
+    if (startCollapsed) {
+      dock.classList.add('collapsed');
+      document.body.classList.add('dock-collapsed');
+    }
 
     const body = dock.querySelector('[data-role="body"]');
     const display = dock.querySelector('[data-role="display"]');
@@ -224,7 +229,11 @@
       document.body.classList.add('has-dock');
       dock.classList.remove('centered');
       const unpin = pinToBottomDuring();
-      return awaitDockTransition().then(unpin);
+      return awaitDockTransition().then(() => {
+        unpin();
+        // Start the idle countdown now that we're in docked mode.
+        scheduleCollapse();
+      });
     }
 
     function transitionToCentered() {
@@ -317,31 +326,65 @@
       }
     });
 
-    // Click anywhere on the dock body or input row → focus input.
-    dock.addEventListener('click', (e) => {
-      if (e.target === toggleEl || toggleEl.contains(e.target)) return;
+    // ─── Auto-collapse on idle, expand on user activity ──────────────
+    // When the dock is in docked mode (not centered intro), let it
+    // collapse to just the input row after a period of inactivity. Any
+    // user activity (hover, click, focus, typing) instantly re-expands
+    // and resets the idle timer.
+    const IDLE_MS = 6000;
+    let idleTimer = null;
+
+    function clearIdle() {
+      if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+    }
+    function scheduleCollapse() {
+      clearIdle();
+      // No auto-collapse in centered (intro) mode; that's the hero state.
+      if (dock.classList.contains('centered')) return;
+      idleTimer = setTimeout(() => {
+        if (!dock.classList.contains('centered')) {
+          dock.classList.add('collapsed');
+          document.body.classList.add('dock-collapsed');
+        }
+      }, IDLE_MS);
+    }
+    function expand() {
+      if (dock.classList.contains('centered')) return;
+      if (dock.classList.contains('collapsed')) {
+        dock.classList.remove('collapsed');
+        document.body.classList.remove('dock-collapsed');
+        // After expanding, body's scrollTop may need a nudge to show the bottom.
+        body.scrollTop = body.scrollHeight;
+      }
+      scheduleCollapse();
+    }
+
+    // Click anywhere on the dock: expand + focus the input.
+    dock.addEventListener('click', () => {
+      expand();
       realInput.focus();
     });
 
-    // Toggle collapsed via title bar click.
-    toggleEl.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dock.classList.toggle('collapsed');
-      saveState({ collapsed: dock.classList.contains('collapsed') });
-      if (!dock.classList.contains('collapsed')) realInput.focus();
-    });
+    // Hovering the dock expands it; mouse movement inside keeps it alive.
+    dock.addEventListener('mouseenter', expand);
+    dock.addEventListener('mousemove', scheduleCollapse);
 
-    // Global keyboard shortcut: backtick focuses input.
+    // Typing in the input expands and resets the timer.
+    realInput.addEventListener('focus', expand);
+    realInput.addEventListener('input', expand);
+
+    // Global keyboard shortcut: backtick focuses input (also expands).
     document.addEventListener('keydown', (e) => {
       if (e.key === '`' && !isTypingInOtherInput(e)) {
         e.preventDefault();
-        if (dock.classList.contains('collapsed')) {
-          dock.classList.remove('collapsed');
-          saveState({ collapsed: false });
-        }
+        expand();
         realInput.focus();
       }
     });
+
+    // Start the idle countdown so the dock collapses on its own if the
+    // user doesn't engage. Suppress it during the centered intro.
+    if (!startCentered) scheduleCollapse();
 
     if (opts.autoFocus) realInput.focus();
 
@@ -443,9 +486,9 @@
     const instance = {
       dock,
       submit,
-      focus: () => realInput.focus(),
-      collapse: () => { dock.classList.add('collapsed'); saveState({ collapsed: true }); },
-      expand: () => { dock.classList.remove('collapsed'); saveState({ collapsed: false }); },
+      focus: () => { expand(); realInput.focus(); },
+      collapse: () => { clearIdle(); dock.classList.add('collapsed'); document.body.classList.add('dock-collapsed'); },
+      expand,
       transitionToDocked,
       transitionToCentered,
       runIntro,
