@@ -231,8 +231,9 @@
       const unpin = pinToBottomDuring();
       return awaitDockTransition().then(() => {
         unpin();
-        // Start the idle countdown now that we're in docked mode.
-        scheduleCollapse();
+        // First-time docked moment: let the user see the dock briefly
+        // before the snappy auto-collapse takes over.
+        scheduleCollapse(INITIAL_IDLE_MS);
       });
     }
 
@@ -337,7 +338,8 @@
     //     expand. Clicking the prompt row or typing clears the flag.
     //   - Aggressive focus: any printable keystroke anywhere on the page
     //     (when not in another input) gets routed to the dock input.
-    const IDLE_MS = 2000;
+    const IDLE_MS = 100;        // default: snap shut shortly after cursor leaves
+    const INITIAL_IDLE_MS = 1500; // first collapse after mount/morph: give a beat
     let idleTimer = null;
     let mouseOverDock = false;
     let userClosed = false; // true when user manually collapsed via bar click
@@ -345,15 +347,16 @@
     function clearIdle() {
       if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
     }
-    function scheduleCollapse() {
+    function scheduleCollapse(delay) {
       clearIdle();
       if (dock.classList.contains('centered')) return; // hero mode: never
       if (mouseOverDock) return;                       // don't tick while hovered
       idleTimer = setTimeout(() => {
         if (dock.classList.contains('centered')) return;
+        if (mouseOverDock) return;
         dock.classList.add('collapsed');
         document.body.classList.add('dock-collapsed');
-      }, IDLE_MS);
+      }, delay != null ? delay : IDLE_MS);
     }
     function expand(opts) {
       if (dock.classList.contains('centered')) return;
@@ -442,9 +445,10 @@
       } catch (_) {}
     });
 
-    // Start the idle countdown so the dock collapses on its own if the
-    // user doesn't engage. Suppress it during the centered intro.
-    if (!startCentered) scheduleCollapse();
+    // Initial mount: longer delay so the user sees the dock briefly
+    // before the snappy auto-collapse takes over. Suppressed in the
+    // centered intro mode.
+    if (!startCentered) scheduleCollapse(INITIAL_IDLE_MS);
 
     if (opts.autoFocus) realInput.focus();
 
