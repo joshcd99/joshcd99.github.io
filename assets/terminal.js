@@ -327,59 +327,119 @@
     });
 
     // ─── Auto-collapse on idle, expand on user activity ──────────────
-    // When the dock is in docked mode (not centered intro), let it
-    // collapse to just the input row after a period of inactivity. Any
-    // user activity (hover, click, focus, typing) instantly re-expands
-    // and resets the idle timer.
-    const IDLE_MS = 6000;
+    // Behavior:
+    //   - Collapses to just the prompt row after IDLE_MS of inactivity.
+    //   - Mouse INSIDE the dock pauses the timer (hovering, even without
+    //     moving, keeps it open).
+    //   - Mouse leaves the dock: timer starts.
+    //   - Click on the title bar (only visible when expanded): manual
+    //     collapse. Sets a "user closed" flag so hovering doesn't auto-
+    //     expand. Clicking the prompt row or typing clears the flag.
+    //   - Aggressive focus: any printable keystroke anywhere on the page
+    //     (when not in another input) gets routed to the dock input.
+    const IDLE_MS = 2000;
     let idleTimer = null;
+    let mouseOverDock = false;
+    let userClosed = false; // true when user manually collapsed via bar click
 
     function clearIdle() {
       if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
     }
     function scheduleCollapse() {
       clearIdle();
-      // No auto-collapse in centered (intro) mode; that's the hero state.
-      if (dock.classList.contains('centered')) return;
+      if (dock.classList.contains('centered')) return; // hero mode: never
+      if (mouseOverDock) return;                       // don't tick while hovered
       idleTimer = setTimeout(() => {
-        if (!dock.classList.contains('centered')) {
-          dock.classList.add('collapsed');
-          document.body.classList.add('dock-collapsed');
-        }
+        if (dock.classList.contains('centered')) return;
+        dock.classList.add('collapsed');
+        document.body.classList.add('dock-collapsed');
       }, IDLE_MS);
     }
-    function expand() {
+    function expand(opts) {
       if (dock.classList.contains('centered')) return;
+      if (userClosed && !(opts && opts.force)) return;
       if (dock.classList.contains('collapsed')) {
         dock.classList.remove('collapsed');
         document.body.classList.remove('dock-collapsed');
-        // After expanding, body's scrollTop may need a nudge to show the bottom.
         body.scrollTop = body.scrollHeight;
       }
       scheduleCollapse();
     }
+    function manualCollapse() {
+      clearIdle();
+      dock.classList.add('collapsed');
+      document.body.classList.add('dock-collapsed');
+      userClosed = true;
+    }
 
-    // Click anywhere on the dock: expand + focus the input.
-    dock.addEventListener('click', () => {
+    // Mouse enter: stop the idle timer + soft-expand (respects userClosed).
+    dock.addEventListener('mouseenter', () => {
+      mouseOverDock = true;
+      clearIdle();
       expand();
+    });
+    // Mouse leave: start the idle timer.
+    dock.addEventListener('mouseleave', () => {
+      mouseOverDock = false;
+      scheduleCollapse();
+    });
+
+    // Click anywhere on the dock: force-expand + focus + clear userClosed.
+    // (The title-bar click handler below uses stopPropagation so this
+    // doesn't fire on bar clicks.)
+    dock.addEventListener('click', () => {
+      userClosed = false;
+      expand({ force: true });
       realInput.focus();
     });
 
-    // Hovering the dock expands it; mouse movement inside keeps it alive.
-    dock.addEventListener('mouseenter', expand);
-    dock.addEventListener('mousemove', scheduleCollapse);
+    // Title-bar click → manual collapse (only reachable when expanded,
+    // since the bar is display:none in collapsed state).
+    toggleEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      manualCollapse();
+    });
 
-    // Typing in the input expands and resets the timer.
-    realInput.addEventListener('focus', expand);
-    realInput.addEventListener('input', expand);
+    // Typing or focus on the input expands + clears userClosed.
+    realInput.addEventListener('focus', () => {
+      userClosed = false;
+      expand({ force: true });
+    });
+    realInput.addEventListener('input', () => {
+      userClosed = false;
+      expand({ force: true });
+    });
 
-    // Global keyboard shortcut: backtick focuses input (also expands).
+    // Aggressive focus: any printable keystroke anywhere on the page
+    // gets routed to the dock input. The user can click into a content
+    // page and still just start typing to interact with the terminal.
     document.addEventListener('keydown', (e) => {
-      if (e.key === '`' && !isTypingInOtherInput(e)) {
+      // If the dock input is already focused, let the native behavior happen.
+      if (document.activeElement === realInput) return;
+      if (isTypingInOtherInput(e)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      // Backtick: focus + force expand, then bail.
+      if (e.key === '`') {
         e.preventDefault();
-        expand();
+        userClosed = false;
+        expand({ force: true });
         realInput.focus();
+        return;
       }
+      // Only redirect printable, single-character keys. Skips Tab, Esc,
+      // Arrows, Backspace, Enter, function keys, etc.
+      if (e.key.length !== 1) return;
+
+      e.preventDefault();
+      userClosed = false;
+      expand({ force: true });
+      realInput.value += e.key;
+      setTyped(realInput.value);
+      realInput.focus();
+      try {
+        realInput.setSelectionRange(realInput.value.length, realInput.value.length);
+      } catch (_) {}
     });
 
     // Start the idle countdown so the dock collapses on its own if the
